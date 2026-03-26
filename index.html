@@ -1,83 +1,512 @@
 <!DOCTYPE html>
-<html class="theme-auto" lang="en">
-
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>Priyanshu Wadhwani | Links</title>
-  <link rel="icon" type="image/x-icon" href="/images/avatar.png">
-
+  <link rel="icon" type="image/x-icon" href="images/avatar.png">
   <meta name="description" content="Cybersecurity learner sharing resources and study guides.">
   <meta name="keywords" content="Priyanshu Wadhwani, Cybersecurity, Tech Student, Resources">
   <meta name="author" content="Priyanshu Wadhwani">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/brands.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-50: #E6F1FB;
+      --blue-100: #B5D4F4;
+      --blue-200: #85B7EB;
+      --blue-400: #378ADD;
+      --blue-600: #185FA5;
+      --blue-800: #0C447C;
+      --blue-900: #042C53;
+      --gray-50: #F8F7F4;
+      --gray-100: #EDEDEA;
+      --gray-200: #D3D1C7;
+      --gray-400: #888780;
+      --gray-600: #5F5E5A;
+      --text-primary: #1a1a1a;
+      --text-secondary: #5F5E5A;
+      --surface: #ffffff;
+      --bg: #F5F4F0;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* ── Custom cursor ── */
+    body { cursor: none; }
+    #cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--blue-400);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 34px; height: 34px;
+      border: 1.5px solid var(--blue-400);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.35s ease, height 0.35s ease, border-color 0.3s, transform 0.08s ease;
+      opacity: 0.6;
+    }
+    body.hovering #cursor { width: 16px; height: 16px; background: var(--blue-600); }
+    body.hovering #cursor-ring { width: 48px; height: 48px; opacity: 0.3; }
+
+    /* ── Parallax background orbs ── */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.45;
+    }
+    .orb-1 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, #B5D4F4 0%, #E6F1FB 60%, transparent 100%);
+      top: -80px; left: -100px;
+    }
+    .orb-2 {
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, #85B7EB 0%, #E6F1FB 60%, transparent 100%);
+      bottom: 80px; right: -80px;
+    }
+    .orb-3 {
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, #B5D4F4 0%, transparent 100%);
+      top: 50%; left: 60%;
+    }
+
+    /* ── Layout ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 56px 20px 64px;
+    }
+    .card {
+      width: 100%;
+      max-width: 440px;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(181,212,244,0.4);
+      border-radius: 28px;
+      padding: 44px 36px 40px;
+      box-shadow: 0 4px 32px rgba(55,138,221,0.08), 0 1px 4px rgba(0,0,0,0.04);
+    }
+
+    /* ── Profile section ── */
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: rise 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
+    }
+    .avatar-wrap {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .avatar-ring {
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 1.5px solid var(--blue-200);
+      animation: spin-slow 12s linear infinite;
+    }
+    .avatar-ring::after {
+      content: '';
+      position: absolute;
+      width: 8px; height: 8px;
+      background: var(--blue-400);
+      border-radius: 50%;
+      top: 4px; left: 50%;
+      transform: translateX(-50%);
+    }
+    .avatar {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--surface);
+      box-shadow: 0 4px 16px rgba(55,138,221,0.18);
+      display: block;
+    }
+    .avatar-placeholder {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-100), var(--blue-200));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: var(--blue-800);
+      border: 3px solid var(--surface);
+      box-shadow: 0 4px 16px rgba(55,138,221,0.18);
+    }
+    .status-dot {
+      position: absolute;
+      bottom: 3px; right: 3px;
+      width: 13px; height: 13px;
+      background: #3bd984;
+      border-radius: 50%;
+      border: 2.5px solid var(--surface);
+    }
+    .name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .title {
+      font-size: 13.5px;
+      font-weight: 400;
+      color: var(--blue-600);
+      text-align: center;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .bio {
+      font-size: 14.5px;
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 28px;
+      opacity: 0;
+      animation: rise 0.6s ease 0.5s forwards;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--blue-100), transparent);
+    }
+    .divider-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--blue-200);
+    }
+
+    /* ── Link buttons ── */
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--surface);
+      border: 1px solid var(--gray-100);
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 14.5px;
+      font-weight: 400;
+      cursor: none;
+      transition: transform 0.22s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.22s ease,
+                  border-color 0.2s,
+                  background 0.2s;
+      opacity: 0;
+      transform: translateY(14px);
+      position: relative;
+      overflow: hidden;
+    }
+    .link-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--blue-50), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .link-btn:hover {
+      transform: translateY(-3px) scale(1.012);
+      box-shadow: 0 8px 24px rgba(55,138,221,0.12), 0 2px 6px rgba(0,0,0,0.05);
+      border-color: var(--blue-100);
+    }
+    .link-btn:hover::before { opacity: 1; }
+    .link-btn:active { transform: translateY(0) scale(0.99); }
+
+    .btn-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .btn-icon svg { width: 18px; height: 18px; }
+    .btn-icon img { width: 20px; height: 20px; object-fit: contain; }
+
+    .btn-icon.drive  { background: #EBF5FF; }
+    .btn-icon.linkedin { background: #E8F4FD; }
+    .btn-icon.instagram { background: #FDF0F7; }
+    .btn-icon.youtube { background: #FFF0F0; }
+    .btn-icon.twitter { background: #F0F4FF; }
+    .btn-icon.generic { background: var(--blue-50); }
+
+    .btn-text {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+    .btn-label {
+      display: block;
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+    .btn-sub {
+      display: block;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 1px;
+    }
+
+    .btn-arrow {
+      margin-left: auto;
+      color: var(--gray-200);
+      transition: color 0.2s, transform 0.2s;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+    .link-btn:hover .btn-arrow { color: var(--blue-400); transform: translateX(3px); }
+
+    /* stagger animations */
+    .link-btn:nth-child(1) { animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.3s forwards; }
+    .link-btn:nth-child(2) { animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.4s forwards; }
+    .link-btn:nth-child(3) { animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.5s forwards; }
+    .link-btn:nth-child(4) { animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.6s forwards; }
+    .link-btn:nth-child(5) { animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.7s forwards; }
+    .link-btn:nth-child(6) { animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.8s forwards; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 32px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--gray-400);
+      opacity: 0;
+      animation: rise 0.5s ease 0.9s forwards;
+    }
+    footer a {
+      color: var(--blue-400);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Keyframes ── */
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .card { padding: 36px 24px 32px; border-radius: 22px; }
+      .page { padding: 32px 16px 48px; }
+    }
+  </style>
 </head>
-
 <body>
 
-  <div class="container">
-    <div class="column">
+  <!-- Custom cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
 
-      <!-- Profile Image -->
-      <img class="avatar avatar--rounded" src="images/avatar.png" srcset="images/avatar@2x.png 2x" alt="Priyanshu Wadhwani">
+  <!-- Parallax background orbs -->
+  <div class="bg-orbs" id="bgOrbs">
+    <div class="orb orb-1" id="orb1"></div>
+    <div class="orb orb-2" id="orb2"></div>
+    <div class="orb orb-3" id="orb3"></div>
+  </div>
 
-      <!-- Name -->
-      <h1>
-        <div>Priyanshu Wadhwani</div>
-      </h1>
+  <div class="page">
+    <div class="card">
 
-      <!-- Bio -->
-      <p>Cybersecurity Mentor<br>Sharing useful resources 📚</p>
+      <!-- Profile -->
+      <div class="profile">
+        <div class="avatar-wrap">
+          <div class="avatar-ring"></div>
+          <img class="avatar" src="images/avatar.png" srcset="images/avatar@2x.png 2x" alt="Priyanshu Wadhwani"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="avatar-placeholder" style="display:none;">PW</div>
+          <div class="status-dot"></div>
+        </div>
+        <h1 class="name">Priyanshu Wadhwani</h1>
+        <p class="title">Cybersecurity Mentor</p>
+        <p class="bio">Sharing resources, roadmaps &amp; guides<br>to help you navigate cybersecurity 📚</p>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-dot"></div>
+        <div class="divider-line"></div>
+      </div>
 
       <!-- Links -->
-      <div class="button-stack" role="navigation">
+      <nav class="links" role="navigation" aria-label="Profile links">
 
-        <!-- Cyber Security Roadmap PDF -->
-        <a class="button button-google-black"
-          href="https://drive.google.com/file/d/1VIRMy8DpSE8duzUqW98nb7o8RlItC67a/view?usp=drive_link"
-          target="_blank" rel="noopener" role="button">
-          <img class="icon" src="images/icons/google-drive.svg" alt="Google Drive Logo">
-          Cyber Security Roadmap PDF
+        <!-- Cybersecurity Roadmap PDF -->
+        <a class="link-btn"
+           href="https://drive.google.com/file/d/1VIRMy8DpSE8duzUqW98nb7o8RlItC67a/view?usp=drive_link"
+           target="_blank" rel="noopener" role="button">
+          <div class="btn-icon drive">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.5 20L2 12.5 7.5 3H16.5L22 12.5 17.5 20H6.5Z" stroke="#185FA5" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M2 12.5H22" stroke="#185FA5" stroke-width="1.6"/>
+              <path d="M7.5 3L12 12.5L17.5 20" stroke="#185FA5" stroke-width="1.6"/>
+              <path d="M16.5 3L12 12.5L6.5 20" stroke="#185FA5" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <div class="btn-text">
+            <span class="btn-label">Cybersecurity Roadmap</span>
+            <span class="btn-sub">Free PDF guide · Google Drive</span>
+          </div>
+          <svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
 
-        <!-- GitHub -->
-        <!-- <a class="button button-github" href="https://github.com/" target="_blank" rel="noopener" role="button">
-          <img class="icon" src="images/icons/github.svg" alt="GitHub Logo">
-          GitHub
-        </a> -->
-
         <!-- LinkedIn -->
-        <a class="button button-linkedin"
-          href="https://www.linkedin.com/in/priyanshu-wadhwani-4a185522a/"
-          target="_blank"
-          rel="noopener"
-          role="button">
-          <img class="icon" src="images/icons/linkedin.svg" alt="LinkedIn Logo">
-          LinkedIn
+        <a class="link-btn"
+           href="https://www.linkedin.com/in/priyanshu-wadhwani-4a185522a/"
+           target="_blank" rel="noopener" role="button">
+          <div class="btn-icon linkedin">
+            <svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </div>
+          <div class="btn-text">
+            <span class="btn-label">LinkedIn</span>
+            <span class="btn-sub">Connect professionally</span>
+          </div>
+          <svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
 
         <!-- Instagram -->
-        <a class="button button-instagram"
-          href="https://www.instagram.com/phsecuritylabs/?hl=en"
-          target="_blank"
-          rel="noopener"
-          role="button">
-          <img class="icon" src="images/icons/instagram.svg" alt="Instagram Logo">
-          Instagram
+        <a class="link-btn"
+           href="https://www.instagram.com/phsecuritylabs/?hl=en"
+           target="_blank" rel="noopener" role="button">
+          <div class="btn-icon instagram">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#ig-grad)" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4" stroke="url(#ig-grad)" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="#C13584"/>
+              <defs>
+                <linearGradient id="ig-grad" x1="2" y1="22" x2="22" y2="2">
+                  <stop offset="0%" stop-color="#F58529"/>
+                  <stop offset="50%" stop-color="#C13584"/>
+                  <stop offset="100%" stop-color="#833AB4"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="btn-text">
+            <span class="btn-label">Instagram</span>
+            <span class="btn-sub">@phsecuritylabs</span>
+          </div>
+          <svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
 
-      </div>
+      </nav>
 
       <footer>
-        <p>Built with LittleLink 🚀</p>
+        <p>Made with care &nbsp;·&nbsp; <a href="https://littlelink.io" target="_blank" rel="noopener">LittleLink</a></p>
       </footer>
-
     </div>
   </div>
 
+  <script>
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = -100, my = -100, rx = -100, ry = -100;
+
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+    function animateCursor() {
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+      rx += (mx - rx) * 0.14;
+      ry += (my - ry) * 0.14;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+    });
+
+    // Parallax orbs
+    const orb1 = document.getElementById('orb1');
+    const orb2 = document.getElementById('orb2');
+    const orb3 = document.getElementById('orb3');
+
+    document.addEventListener('mousemove', e => {
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = e.clientY / window.innerHeight - 0.5;
+      orb1.style.transform = `translate(${x * 28}px, ${y * 22}px)`;
+      orb2.style.transform = `translate(${x * -22}px, ${y * -18}px)`;
+      orb3.style.transform = `translate(${x * 18}px, ${y * 14}px)`;
+    });
+  </script>
 </body>
 </html>
